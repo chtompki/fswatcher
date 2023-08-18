@@ -539,7 +539,8 @@ class FileSystemHandler(FileSystemEventHandler):
         for page in page_iterator:
             if "Contents" in page:
                 for obj in page["Contents"]:
-                    keys.append(f'/watch/{obj["Key"].replace(folder, "")}')
+                    object_key= f'' + self.config.path + f'/{obj["Key"].replace(folder, "")}'
+                    keys.append(object_key)
         end_time = time.time()
         log.info(f"Found {len(keys)} keys in {round(end_time - start_time, 2)} seconds")
         return keys
@@ -692,7 +693,7 @@ class FileSystemHandler(FileSystemEventHandler):
         return set(all_files)
 
     def fallback_directory_watcher(self):
-        path = "/watch"
+        path = self.config.path
 
         last_run_timestamp_str = None
 
